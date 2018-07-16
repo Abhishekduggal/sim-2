@@ -3,7 +3,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import DashBoard from "./components/DashBoard/DashBoard";
-import Wizard from "./components/Wizard/Wizard";
 import StepOne from "./components/StepOne/StepOne";
 import StepTwo from "./components/StepTwo/StepTwo";
 import StepThree from "./components/StepThree/StepThree";

@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { handleMortgage, handleRent } from "../../ducks/reducer";
 
 import Wizard from "../Wizard/Wizard";
+
+import { reset } from "../../ducks/reducer";
 
 class StepThree extends Component {
   constructor() {
@@ -34,37 +35,24 @@ class StepThree extends Component {
         rent
       })
       .then(res => {
-        console.log(res);
+        this.props.reset();
       });
   }
 
   render() {
-    let {
-      handleMortgage,
-      handleRent,
-      mortgage,
-      rent,
-      name,
-      address,
-      city,
-      state,
-      zip,
-      img
-    } = this.props;
-    let { mortgage: stateMortgage, rent: stateRent } = this.state;
+    let { name, address, city, state, zip, img } = this.props;
+    let { mortgage, rent } = this.state;
     return (
       <div>
         <h3>Recommend Rent: $$$</h3>
         <input
           placeholder="mortgage"
           type="number"
-          value={mortgage || stateMortgage}
           onChange={e => this.handleInputs(e.target.value, "mortgage")}
         />
         <input
           placeholder="rent"
           type="number"
-          value={rent || stateRent}
           onChange={e => this.handleInputs(e.target.value, "rent")}
         />
         <Wizard />
@@ -72,16 +60,7 @@ class StepThree extends Component {
         <Link
           to="/"
           onClick={() =>
-            this.addHouse(
-              name,
-              address,
-              city,
-              state,
-              zip,
-              img,
-              stateMortgage,
-              stateRent
-            )
+            this.addHouse(name, address, city, state, zip, img, mortgage, rent)
           }
         >
           Complete
@@ -95,7 +74,7 @@ const mapStateToProps = state => state;
 
 export default connect(
   mapStateToProps,
-  { handleMortgage, handleRent }
+  { reset }
 )(StepThree);
 
 // onClick={() => this.addHouse(name, address, city, state, zipcode)}
